@@ -1,7 +1,7 @@
 (* PART 1 *)
 
-let input_test_file = "inputs/2021/day_x_test.txt"
-let input_file = "inputs/2021/day_x.txt"
+let input_test_file = "inputs/2021/day_5_test.txt"
+let input_file = "inputs/2021/day_5.txt"
 
 let read_file file =
   In_channel.with_open_bin file In_channel.input_all
