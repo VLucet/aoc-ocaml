@@ -38,12 +38,24 @@ let rec run_simulation steps pop =
   | false, _ -> pop
   | _ , _ -> failwith "unreachable"
 
+let rec run_simulation_array steps pop =
+  match steps > 0 with 
+  | true -> run_simulation_array (steps - 1) (
+      let zeroes = pop.(0) in 
+        let next = Array.append (Array.sub pop 1 8) [|zeroes|] in 
+         let ret = next.(6) <- next.(6) + zeroes in next
+    ) 
+  | false -> pop
+
 let solve_part1 file = 
   parse_content file
   |> parse_initial_pop 
   |> count_equal (List.init 9 (fun x -> x))
-  |> run_simulation 80
-  |> List.fold_left ( + ) 0
+  |> Array.of_list
+  (* |> run_simulation 80 *)
+  |> run_simulation_array 80
+  (* |> List.fold_left ( + ) 0 *)
+  |> Array.fold_left ( + ) 0
 
 let result_test = solve_part1 input_test_file
 let result = solve_part1 input_file
@@ -54,8 +66,11 @@ let solve_part2 file =
   parse_content file
   |> parse_initial_pop 
   |> count_equal (List.init 9 (fun x -> x))
-  |> run_simulation 256
-  |> List.fold_left ( + ) 0
+  |> Array.of_list
+  (* |> run_simulation 256 *)
+  |> run_simulation_array 256
+  (* |> List.fold_left ( + ) 0 *)
+  |> Array.fold_left ( + ) 0
 
 let result_test_2 = solve_part2 input_test_file
 let result_2 = solve_part2 input_file
