@@ -43,8 +43,8 @@ let rec run_simulation_array steps pop =
   | true -> run_simulation_array (steps - 1) (
       let zeroes = pop.(0) in 
         let next = Array.append (Array.sub pop 1 8) [|zeroes|] in 
-         let ret = next.(6) <- next.(6) + zeroes in next
-    ) 
+         next.(6) <- next.(6) + zeroes ; next
+    )
   | false -> pop
 
 let solve_part1 file = 
