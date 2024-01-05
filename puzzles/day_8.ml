@@ -9,9 +9,26 @@ let read_file file =
 let parse_content file =
   let contents = read_file file in
     String.split_on_char '\n' contents
+
+let length_to_digit lgt =
+  match lgt with 
+  | 2 -> 1
+  | 3 -> 7
+  | 4 -> 4
+  | 7 -> 8
+  | _ -> -1
  
 let solve_part1 file = 
   parse_content file
+  |> List.map (String.split_on_char '|')
+  |> List.map (fun x -> List.nth x 1)
+  |> List.map (String.split_on_char ' ')
+  |> List.map (fun x -> List.filter (fun y -> y <> "") x)
+  |> List.map (fun x -> List.map String.length x)
+  |> List.map (fun x -> List.map length_to_digit x)
+  |> List.map (fun x -> List.filter (fun y -> y >= 0) x)
+  |> List.flatten
+  |> List.length
 
 let result_test = solve_part1 input_test_file
 let result = solve_part1 input_file
